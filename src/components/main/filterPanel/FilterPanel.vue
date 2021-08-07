@@ -2,15 +2,15 @@
   <aside class="filter">
     <h2 class="filter__title">Фильтры</h2>
 
-    <form class="filter__form form" action="#" method="get">
+    <form class="filter__form form" @submit.prevent="applyFilter">
       <fieldset class="form__block">
         <legend class="form__legend">Цена</legend>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" name="min-price" v-model="selectedPriceFrom" />
+          <input class="form__input" type="text" name="min-price" v-model="currentPriceFrom" />
           <span class="form__value">От</span>
         </label>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" name="max-price" v-model="selectedPriceTo" />
+          <input class="form__input" type="text" name="max-price" v-model="currentPriceTo" />
           <span class="form__value">До</span>
         </label>
       </fieldset>
@@ -18,7 +18,7 @@
       <fieldset class="form__block">
         <legend class="form__legend">Категория</legend>
         <label class="form__label form__label--select">
-          <select class="form__select" type="text" name="category" v-model="selectedCategoryId">
+          <select class="form__select" type="text" name="category" v-model="currentCategoryId">
             <option value="0">Все категории</option>
             <option :value="category.id" v-for="category in categories" :key="category.id">{{ category.title }}</option>
           </select>
@@ -28,47 +28,11 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
         <ul class="colors">
-          <li class="colors__item">
+          <li class="colors__item" v-for="color in allProductColors" :key="color">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#73B6EA" checked="" />
-              <span class="colors__value" style="background-color: #73b6ea"> </span>
+              <input class="colors__radio sr-only" type="radio" :value="`${color}`" v-model="currentColor" />
+              <span class="colors__value" :style="{ backgroundColor: `#${color}` }"> </span>
             </label>
-          </li>
-          <li class="colors__item">
-            <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#FFBE15" />
-              <span class="colors__value" style="background-color: #ffbe15"> </span>
-            </label>
-          </li>
-          <li class="colors__item">
-            <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#939393" />
-              <span class="colors__value" style="background-color: #939393"> </span
-            ></label>
-          </li>
-          <li class="colors__item">
-            <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#8BE000" />
-              <span class="colors__value" style="background-color: #8be000"> </span
-            ></label>
-          </li>
-          <li class="colors__item">
-            <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#FF6B00" />
-              <span class="colors__value" style="background-color: #ff6b00"> </span
-            ></label>
-          </li>
-          <li class="colors__item">
-            <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#FFF" />
-              <span class="colors__value" style="background-color: #fff"> </span
-            ></label>
-          </li>
-          <li class="colors__item">
-            <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#000" />
-              <span class="colors__value" style="background-color: #000"> </span
-            ></label>
           </li>
         </ul>
       </fieldset>
@@ -134,7 +98,7 @@
       </fieldset>
 
       <button class="filter__submit button button--primery" type="submit">Применить</button>
-      <button class="filter__reset button button--second" type="button">Сбросить</button>
+      <button class="filter__reset button button--second" type="button" @click="resetFilter">Сбросить</button>
     </form>
   </aside>
 </template>
@@ -143,10 +107,13 @@
 import categories from '@/data/categories'
 export default {
   name: 'FilterPanel',
-  props: ['filterCategoryId', 'filterPriceFrom', 'filterPriceTo'],
+  props: ['filterCategoryId', 'filterPriceFrom', 'filterPriceTo', 'filterColor', 'allProductColors'],
   data: () => ({
     categories,
-    // selectedCategoryId: 0,
+    currentCategoryId: 0,
+    currentPriceFrom: 0,
+    currentPriceTo: 0,
+    currentColor: '',
   }),
   computed: {
     selectedCategoryId: {
@@ -172,6 +139,32 @@ export default {
       set(value) {
         this.$emit('update:filterPriceTo', value)
       },
+    },
+    selectedColor: {
+      get() {
+        return this.filterColor
+      },
+      set(value) {
+        this.$emit('update:filterColor', value)
+      },
+    },
+  },
+  methods: {
+    applyFilter() {
+      this.currentCategoryId && (this.selectedCategoryId = +this.currentCategoryId)
+      this.currentPriceFrom && (this.selectedPriceFrom = +this.currentPriceFrom)
+      this.currentPriceTo && (this.selectedPriceTo = +this.currentPriceTo)
+      this.currentColor && (this.selectedColor = this.currentColor)
+    },
+    resetFilter() {
+      this.currentCategoryId = 0
+      this.currentPriceFrom = 0
+      this.currentPriceTo = 0
+      this.currentColor = ''
+      this.selectedCategoryId = 0
+      this.selectedPriceFrom = 0
+      this.selectedPriceTo = 0
+      this.selectedColor = ''
     },
   },
 }

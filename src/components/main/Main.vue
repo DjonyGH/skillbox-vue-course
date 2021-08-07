@@ -10,6 +10,8 @@
         :filter-category-id.sync="filterCategoryId"
         :filter-price-from.sync="filterPriceFrom"
         :filter-price-to.sync="filterPriceTo"
+        :filter-color.sync="filterColor"
+        :all-product-colors="allProductColors"
       />
       <CatalogList :products="filteredProducts" />
     </div>
@@ -28,6 +30,7 @@ export default {
     filterCategoryId: 0,
     filterPriceFrom: 0,
     filterPriceTo: 0,
+    filterColor: '',
   }),
   computed: {
     filteredProducts() {
@@ -38,7 +41,23 @@ export default {
         (filteredProducts = filteredProducts.filter((product) => product.price >= this.filterPriceFrom))
       this.filterPriceTo &&
         (filteredProducts = filteredProducts.filter((product) => product.price <= this.filterPriceTo))
+      this.filterColor &&
+        (filteredProducts = filteredProducts.filter((product) => product.colors.includes(this.filterColor)))
       return filteredProducts
+    },
+    // получение всех цветов, которые есть у товаров
+    allProductColors() {
+      let colors = []
+      this.products.forEach((product) => {
+        if (product.colors.length) {
+          product.colors.forEach((color) => {
+            if (!colors.includes(color)) {
+              colors.push(color)
+            }
+          })
+        }
+      })
+      return colors
     },
   },
 }

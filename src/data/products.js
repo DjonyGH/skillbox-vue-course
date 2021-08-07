@@ -22,7 +22,7 @@ export default [
     title: 'Смартфон Xiaomi Mi Mix 3 6/128GB',
     price: 21790,
     imageUrl: 'img/phone.jpg',
-    colors: ['', '', ''],
+    colors: [],
     sizes: ['32gb', '64gb', '128gb'],
     categoryId: 3,
   },
