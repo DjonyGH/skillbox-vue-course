@@ -6,11 +6,11 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цена</legend>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" name="min-price" value="0" />
+          <input class="form__input" type="text" name="min-price" v-model="selectedPriceFrom" />
           <span class="form__value">От</span>
         </label>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" name="max-price" value="12345" />
+          <input class="form__input" type="text" name="max-price" v-model="selectedPriceTo" />
           <span class="form__value">До</span>
         </label>
       </fieldset>
@@ -143,10 +143,37 @@
 import categories from '@/data/categories'
 export default {
   name: 'FilterPanel',
+  props: ['filterCategoryId', 'filterPriceFrom', 'filterPriceTo'],
   data: () => ({
     categories,
-    selectedCategoryId: 0,
+    // selectedCategoryId: 0,
   }),
+  computed: {
+    selectedCategoryId: {
+      get() {
+        return this.filterCategoryId
+      },
+      set(value) {
+        this.$emit('update:filterCategoryId', value)
+      },
+    },
+    selectedPriceFrom: {
+      get() {
+        return this.filterPriceFrom
+      },
+      set(value) {
+        this.$emit('update:filterPriceFrom', value)
+      },
+    },
+    selectedPriceTo: {
+      get() {
+        return this.filterPriceTo
+      },
+      set(value) {
+        this.$emit('update:filterPriceTo', value)
+      },
+    },
+  },
 }
 </script>
 

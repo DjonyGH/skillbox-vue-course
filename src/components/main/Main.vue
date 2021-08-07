@@ -6,7 +6,11 @@
     </div>
 
     <div class="content__catalog">
-      <FilterPanel />
+      <FilterPanel
+        :filter-category-id.sync="filterCategoryId"
+        :filter-price-from.sync="filterPriceFrom"
+        :filter-price-to.sync="filterPriceTo"
+      />
       <CatalogList :products="filteredProducts" />
     </div>
   </main>
@@ -29,10 +33,11 @@ export default {
     filteredProducts() {
       let filteredProducts = this.products
       this.filterCategoryId &&
-        (filteredProducts = this.products.filter((product) => product.categoryId === this.filterCategoryId))
+        (filteredProducts = filteredProducts.filter((product) => product.categoryId === this.filterCategoryId))
       this.filterPriceFrom &&
-        (filteredProducts = this.products.filter((product) => product.price >= this.filterPriceFrom))
-      this.filterPriceTo && (filteredProducts = this.products.filter((product) => product.price <= this.filterPriceTo))
+        (filteredProducts = filteredProducts.filter((product) => product.price >= this.filterPriceFrom))
+      this.filterPriceTo &&
+        (filteredProducts = filteredProducts.filter((product) => product.price <= this.filterPriceTo))
       return filteredProducts
     },
   },
