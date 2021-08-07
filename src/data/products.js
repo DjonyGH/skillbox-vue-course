@@ -6,6 +6,7 @@ export default [
     imageUrl: 'img/radio.jpg',
     colors: ['73b6ea', '8be000', '222'],
     sizes: [],
+    categoryId: 1,
   },
   {
     id: 1,
@@ -14,6 +15,7 @@ export default [
     imageUrl: 'img/toothbrush.jpg',
     colors: ['f0f0f0', '8be000', '73b6ea'],
     sizes: [],
+    categoryId: 2,
   },
   {
     id: 2,
@@ -22,6 +24,7 @@ export default [
     imageUrl: 'img/phone.jpg',
     colors: ['', '', ''],
     sizes: ['32gb', '64gb', '128gb'],
+    categoryId: 3,
   },
   {
     id: 3,
@@ -30,6 +33,7 @@ export default [
     imageUrl: 'img/board.jpg',
     colors: ['939393', 'ff6b00', '222'],
     sizes: [],
+    categoryId: 4,
   },
   {
     id: 4,
@@ -38,6 +42,7 @@ export default [
     imageUrl: 'img/phone-2.jpg',
     colors: [],
     sizes: ['32gb', '64gb', '128gb'],
+    categoryId: 3,
   },
   {
     id: 5,
@@ -46,6 +51,7 @@ export default [
     imageUrl: 'img/phone-3.jpg',
     colors: [],
     sizes: ['32gb', '64gb', '128gb'],
+    categoryId: 3,
   },
   {
     id: 6,
@@ -54,6 +60,7 @@ export default [
     imageUrl: 'img/bicycle.jpg',
     colors: ['ffbe15', '8be000', 'ff6b00'],
     sizes: [],
+    categoryId: 4,
   },
   {
     id: 7,
@@ -63,6 +70,7 @@ export default [
     srcset: '',
     colors: ['939393', 'f0f0f0'],
     sizes: [],
+    categoryId: 4,
   },
   {
     id: 8,
@@ -72,5 +80,6 @@ export default [
     srcset: '',
     colors: ['222', '73b6ea'],
     sizes: [],
+    categoryId: 4,
   },
 ]
