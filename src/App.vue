@@ -13,6 +13,7 @@ import MainPage from '@/pages/MainPage.vue'
 import ProductPage from '@/pages/ProductPage.vue'
 import NotFoundPage from '@/pages/NotFoundPage.vue'
 import routes from '@/routes/routes.js'
+import eventBus from '@/eventBus'
 export default {
   name: 'App',
   components: { Header, Footer, MainPage, ProductPage, NotFoundPage },
@@ -20,10 +21,19 @@ export default {
     currentPage: 'main',
     currentPageParams: {},
   }),
+  methods: {
+    goToPage(pageName, pageParam) {
+      this.currentPage = pageName
+      this.currentPageParams = pageParam
+    },
+  },
   computed: {
     currentPageComponent() {
       return routes[this.currentPage] || 'NotFoundPage'
     },
+  },
+  created() {
+    eventBus.$on('goToPage', (pageName, pageParam) => this.goToPage(pageName, pageParam))
   },
 }
 </script>
