@@ -3,10 +3,10 @@
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="index.html" @click.prevent="goToPage('main')"> Каталог </a>
+          <router-link class="breadcrumbs__link" :to="{ name: 'main' }"> Каталог </router-link>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#" @click.prevent="goToPage('main')"> {{ category.title }} </a>
+          <router-link class="breadcrumbs__link" :to="{ name: 'main' }"> {{ category.title }} </router-link>
         </li>
         <li class="breadcrumbs__item">
           <a class="breadcrumbs__link"> {{ product.title }} </a>
@@ -150,17 +150,16 @@ import goToPage from '@/helpers/goToPage'
 import numberFormat from '@/helpers/numberFormat'
 export default {
   name: 'ProductPage',
-  props: ['pageParams'],
   data() {
     return {
-      selectedColor: `#${products.find((product) => product.id === this.pageParams.id).colors[0]}`,
-      selectedSize: `#${products.find((product) => product.id === this.pageParams.id).sizes[0]}`,
+      selectedColor: `#${products.find((product) => product.id === +this.$route.params.id).colors[0]}`,
+      selectedSize: `#${products.find((product) => product.id === +this.$route.params.id).sizes[0]}`,
       s: 1,
     }
   },
   computed: {
     product() {
-      return products.find((product) => product.id === this.pageParams.id)
+      return products.find((product) => product.id === +this.$route.params.id)
     },
     category() {
       return categories.find((category) => category.id === this.product.categoryId)
