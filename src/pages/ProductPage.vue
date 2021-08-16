@@ -3,13 +3,13 @@
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="index.html"> Каталог </a>
+          <a class="breadcrumbs__link" href="index.html" @click.prevent="goToPage('main')"> Каталог </a>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#"> Мобильный транспорт </a>
+          <a class="breadcrumbs__link" href="#" @click.prevent="goToPage('main')"> {{ category.title }} </a>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link"> Смартфон Xiaomi Mi Mix 3 6/128GB </a>
+          <a class="breadcrumbs__link"> {{ product.title }} </a>
         </li>
       </ul>
     </div>
@@ -20,110 +20,47 @@
           <img
             width="570"
             height="570"
-            src="img/phone-square.jpg"
-            srcset="img/phone-square@2x.jpg 2x"
-            alt="Название товара"
+            :src="product.imageUrl"
+            :srcset="`${product.imageUrl.split('.')[0]}@2x.${product.imageUrl.split('.')[1]} 2x`"
+            :alt="product.title"
           />
         </div>
-        <ul class="pics__list">
-          <li class="pics__item">
-            <a href="" class="pics__link pics__link--current">
-              <img
-                width="98"
-                height="98"
-                src="img/phone-square-1.jpg"
-                srcset="img/phone-square-1@2x.jpg 2x"
-                alt="Название товара"
-              />
-            </a>
-          </li>
-          <li class="pics__item">
-            <a href="" class="pics__link">
-              <img
-                width="98"
-                height="98"
-                src="img/phone-square-2.jpg"
-                srcset="img/phone-square-2@2x.jpg 2x"
-                alt="Название товара"
-              />
-            </a>
-          </li>
-          <li class="pics__item">
-            <a href="" class="pics__link">
-              <img
-                width="98"
-                height="98"
-                src="img/phone-square-3.jpg"
-                srcset="img/phone-square-3@2x.jpg 2x"
-                alt="Название товара"
-              />
-            </a>
-          </li>
-          <li class="pics__item">
-            <a class="pics__link" href="#">
-              <img
-                width="98"
-                height="98"
-                src="img/phone-square-4.jpg"
-                srcset="img/phone-square-4@2x.jpg 2x"
-                alt="Название товара"
-              />
-            </a>
-          </li>
-        </ul>
       </div>
 
       <div class="item__info">
-        <span class="item__code">Артикул: 150030</span>
-        <h2 class="item__title">Смартфон Xiaomi Mi Mix 3 6/128GB</h2>
+        <span class="item__code">Артикул: {{ product.id }}</span>
+        <h2 class="item__title">{{ product.title }}</h2>
         <div class="item__form">
           <form class="form" action="#" method="POST">
-            <b class="item__price"> 18 990 ₽ </b>
+            <b class="item__price"> {{ product.price | numberFormat }} ₽ </b>
 
-            <fieldset class="form__block">
+            <fieldset class="form__block" v-if="product.colors.length">
               <legend class="form__legend">Цвет:</legend>
               <ul class="colors">
-                <li class="colors__item">
+                <li class="colors__item" v-for="(color, index) in product.colors" :key="index">
                   <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio" name="color-item" value="blue" checked="" />
-                    <span class="colors__value" style="background-color: #73b6ea"> </span>
+                    <input class="colors__radio sr-only" type="radio" :value="`#${color}`" v-model="selectedColor" />
+                    <span class="colors__value" style="border: 1px solid white" :style="`background-color: #${color}`">
+                    </span>
                   </label>
-                </li>
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio" name="color-item" value="yellow" />
-                    <span class="colors__value" style="background-color: #ffbe15"> </span>
-                  </label>
-                </li>
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio" name="color-item" value="gray" />
-                    <span class="colors__value" style="background-color: #939393"> </span
-                  ></label>
                 </li>
               </ul>
             </fieldset>
 
-            <fieldset class="form__block">
+            <fieldset class="form__block" v-if="product.sizes.length">
               <legend class="form__legend">Объемб в ГБ:</legend>
 
               <ul class="sizes sizes--primery">
-                <li class="sizes__item">
+                <li class="sizes__item" v-for="size in product.sizes" :key="size">
                   <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="32" />
-                    <span class="sizes__value"> 32gb </span>
-                  </label>
-                </li>
-                <li class="sizes__item">
-                  <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="64" />
-                    <span class="sizes__value"> 64gb </span>
-                  </label>
-                </li>
-                <li class="sizes__item">
-                  <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="128" checked="" />
-                    <span class="sizes__value"> 128gb </span>
+                    <input
+                      class="sizes__radio sr-only"
+                      type="radio"
+                      name="sizes-item"
+                      :value="size"
+                      v-model="selectedSize"
+                    />
+                    <span class="sizes__value"> {{ size }} </span>
                   </label>
                 </li>
               </ul>
@@ -207,9 +144,34 @@
 </template>
 
 <script>
+import products from '@/data/products'
+import categories from '@/data/categories'
+import goToPage from '@/helpers/goToPage'
+import numberFormat from '@/helpers/numberFormat'
 export default {
   name: 'ProductPage',
   props: ['pageParams'],
+  data() {
+    return {
+      selectedColor: `#${products.find((product) => product.id === this.pageParams.id).colors[0]}`,
+      selectedSize: `#${products.find((product) => product.id === this.pageParams.id).sizes[0]}`,
+      s: 1,
+    }
+  },
+  computed: {
+    product() {
+      return products.find((product) => product.id === this.pageParams.id)
+    },
+    category() {
+      return categories.find((category) => category.id === this.product.categoryId)
+    },
+  },
+  methods: {
+    goToPage,
+  },
+  filters: {
+    numberFormat,
+  },
 }
 </script>
 
