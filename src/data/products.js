@@ -1,6 +1,6 @@
 export default [
   {
-    id: 0,
+    id: 1,
     title: 'Радионяня Motorola MBP16',
     price: 3690,
     imageUrl: 'img/radio.jpg',
@@ -9,7 +9,7 @@ export default [
     categoryId: 1,
   },
   {
-    id: 1,
+    id: 2,
     title: 'Ультразвуковая зубная щётка Playbrush Smart Sonic',
     price: 5660,
     imageUrl: 'img/toothbrush.jpg',
@@ -18,7 +18,7 @@ export default [
     categoryId: 2,
   },
   {
-    id: 2,
+    id: 3,
     title: 'Смартфон Xiaomi Mi Mix 3 6/128GB',
     price: 21790,
     imageUrl: 'img/phone.jpg',
@@ -27,7 +27,7 @@ export default [
     categoryId: 3,
   },
   {
-    id: 3,
+    id: 4,
     title: 'Электроскейт Razor Cruiser',
     price: 24690,
     imageUrl: 'img/board.jpg',
@@ -36,7 +36,7 @@ export default [
     categoryId: 4,
   },
   {
-    id: 4,
+    id: 5,
     title: 'Смартфон Xiaomi Mi A3 4/64GB Android One',
     price: 14790,
     imageUrl: 'img/phone-2.jpg',
@@ -45,7 +45,7 @@ export default [
     categoryId: 3,
   },
   {
-    id: 5,
+    id: 6,
     title: 'Смартфон Xiaomi Redmi 6/128GB',
     price: 8790,
     imageUrl: 'img/phone-3.jpg',
@@ -54,7 +54,7 @@ export default [
     categoryId: 3,
   },
   {
-    id: 6,
+    id: 7,
     title: 'Электрический дрифт-карт Razor Crazy Cart',
     price: 39690,
     imageUrl: 'img/bicycle.jpg',
@@ -63,7 +63,7 @@ export default [
     categoryId: 4,
   },
   {
-    id: 7,
+    id: 8,
     title: 'Гироскутер Razor Hovertrax 2.0',
     price: 34790,
     imageUrl: 'img/wheels.jpg',
@@ -73,7 +73,7 @@ export default [
     categoryId: 4,
   },
   {
-    id: 8,
+    id: 9,
     title: 'Детский трюковой самокат Razor Grom',
     price: 4790,
     imageUrl: 'img/scooter.jpg',

@@ -8,7 +8,9 @@
         aria-label="Предыдущая страница"
         @click.prevent="prevPage"
       >
-        &lt;
+        <svg width="8" height="14" fill="currentColor">
+          <use xlink:href="#icon-arrow-left"></use>
+        </svg>
       </a>
     </li>
     <li class="pagination__item" v-for="pageNumber in pages" :key="pageNumber">
@@ -30,7 +32,9 @@
         aria-label="Следующая страница"
         @click.prevent="nextPage"
       >
-        &gt;
+        <svg width="8" height="14" fill="currentColor">
+          <use xlink:href="#icon-arrow-right"></use>
+        </svg>
       </a>
     </li>
   </ul>

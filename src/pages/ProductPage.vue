@@ -74,7 +74,7 @@
                   </svg>
                 </button>
 
-                <input type="text" value="1" name="count" />
+                <input type="text" value="1" name="count" readonly />
 
                 <button type="button" aria-label="Добавить один товар">
                   <svg width="12" height="12" fill="currentColor">
