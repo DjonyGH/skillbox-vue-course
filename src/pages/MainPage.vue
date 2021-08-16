@@ -20,10 +20,10 @@
 
 <script>
 import products from '@/data/products'
-import FilterPanel from './filterPanel/FilterPanel.vue'
-import CatalogList from './catalogList/CatalogList.vue'
+import FilterPanel from '@/components/filterPanel/FilterPanel.vue'
+import CatalogList from '@/components/catalogList/CatalogList.vue'
 export default {
-  name: 'Main',
+  name: 'MainPage',
   components: { FilterPanel, CatalogList },
   data: () => ({
     products,
