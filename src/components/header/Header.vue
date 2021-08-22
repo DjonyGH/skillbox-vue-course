@@ -7,7 +7,7 @@
         <img src="img/svg/logo-tech.svg" alt="Логотип интернет магазина Технозавррр" width="190" height="33" />
       </router-link>
 
-      <a class="header__tel" href="tel:8 800 600 90 09"> 8 800 600 90 09 </a>
+      <a class="header__tel" href="tel:8 800 600 90 90"> 8 800 600 90 90 </a>
 
       <CartIndicator />
     </div>
