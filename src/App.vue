@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <Component :is="currentPageComponent" :page-params="currentPageParams" />
+    <router-view />
     <Footer />
   </div>
 </template>
@@ -9,32 +9,10 @@
 <script>
 import Header from '@/components/header/Header.vue'
 import Footer from '@/components/footer/Footer.vue'
-import MainPage from '@/pages/MainPage.vue'
-import ProductPage from '@/pages/ProductPage.vue'
-import NotFoundPage from '@/pages/NotFoundPage.vue'
-import routes from '@/routes/routes.js'
-import eventBus from '@/eventBus'
+
 export default {
   name: 'App',
-  components: { Header, Footer, MainPage, ProductPage, NotFoundPage },
-  data: () => ({
-    currentPage: 'main',
-    currentPageParams: {},
-  }),
-  methods: {
-    goToPage(pageName, pageParam) {
-      this.currentPage = pageName
-      this.currentPageParams = pageParam
-    },
-  },
-  computed: {
-    currentPageComponent() {
-      return routes[this.currentPage] || 'NotFoundPage'
-    },
-  },
-  created() {
-    eventBus.$on('goToPage', (pageName, pageParam) => this.goToPage(pageName, pageParam))
-  },
+  components: { Header, Footer },
 }
 </script>
 

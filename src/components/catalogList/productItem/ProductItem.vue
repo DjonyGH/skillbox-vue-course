@@ -1,12 +1,12 @@
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#" @click.prevent="goToPage('product', { id: product.id })">
+    <router-link class="catalog__pic" :to="{ name: 'product', params: { id: product.id } }">
       <img
         :src="product.imageUrl"
         :srcset="`${product.imageUrl.split('.')[0]}@2x.${product.imageUrl.split('.')[1]} 2x`"
         alt="Название товара"
       />
-    </a>
+    </router-link>
 
     <h3 class="catalog__title">
       <a href="#"> {{ product.title }} </a>
