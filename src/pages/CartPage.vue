@@ -11,37 +11,37 @@
       </ul>
 
       <h1 class="content__title">Корзина</h1>
-      <span class="content__info"> 3 товара </span>
+      <span class="content__info"> {{ $store.getters.cartDetailProducts.length || 'Карзина пуста' }}</span>
     </div>
 
     <section class="cart">
       <form class="cart__form form" action="#" method="POST">
         <div class="cart__field">
           <ul class="cart__list">
-            <li class="cart__item product">
+            <li class="cart__item product" v-for="product in $store.getters.cartDetailProducts" :key="product.id">
               <div class="product__pic">
                 <img
-                  src="img/phone-square-3.jpg"
+                  :src="product.imageUrl"
+                  :srcset="`${product.imageUrl.split('.')[0]}@2x.${product.imageUrl.split('.')[1]} 2x`"
+                  alt="Название товара"
                   width="120"
                   height="120"
-                  srcset="img/phone-square-3@2x.jpg 2x"
-                  alt="Название товара"
                 />
               </div>
-              <h3 class="product__title">Смартфон Xiaomi Redmi Note 7 Pro 6/128GB</h3>
+              <h3 class="product__title">{{ product.title }}</h3>
               <p class="product__info">Объем: <span>128GB</span></p>
-              <span class="product__code"> Артикул: 1501230 </span>
+              <span class="product__code"> Артикул: {{ product.id }} </span>
 
               <div class="product__counter form__counter">
-                <button type="button" aria-label="Убрать один товар">
+                <button type="button" aria-label="Убрать один товар" @click.prevent="removeProduct(product.id)">
                   <svg width="10" height="10" fill="currentColor">
                     <use xlink:href="#icon-minus"></use>
                   </svg>
                 </button>
 
-                <input type="text" value="1" name="count" />
+                <input type="text" :value="product.amount" name="count" readonly />
 
-                <button type="button" aria-label="Добавить один товар">
+                <button type="button" aria-label="Добавить один товар" @click.prevent="addProduct(product.id)">
                   <svg width="10" height="10" fill="currentColor">
                     <use xlink:href="#icon-plus"></use>
                   </svg>
@@ -49,96 +49,6 @@
               </div>
 
               <b class="product__price"> 18 990 ₽ </b>
-
-              <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины">
-                <svg width="20" height="20" fill="currentColor">
-                  <use xlink:href="#icon-close"></use>
-                </svg>
-              </button>
-            </li>
-
-            <li class="cart__item product">
-              <div class="product__pic">
-                <img
-                  src="img/pic-square-2.jpg"
-                  width="120"
-                  height="120"
-                  srcset="img/pic-square-2@2x.jpg 2x"
-                  alt="Название товара"
-                />
-              </div>
-              <h3 class="product__title">Гироскутер Razor Hovertrax 2.0</h3>
-              <p class="product__info product__info--color">
-                Цвет:
-                <span>
-                  <i style="background-color: #73b6ea"></i>
-                  Нежно-голубой
-                </span>
-              </p>
-              <span class="product__code"> Артикул: 1501230 </span>
-
-              <div class="product__counter form__counter">
-                <button type="button" aria-label="Убрать один товар">
-                  <svg width="10" height="10" fill="currentColor">
-                    <use xlink:href="#icon-minus"></use>
-                  </svg>
-                </button>
-
-                <input type="text" value="1" name="count" />
-
-                <button type="button" aria-label="Добавить один товар">
-                  <svg width="10" height="10" fill="currentColor">
-                    <use xlink:href="#icon-plus"></use>
-                  </svg>
-                </button>
-              </div>
-
-              <b class="product__price"> 4 990 ₽ </b>
-
-              <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины">
-                <svg width="20" height="20" fill="currentColor">
-                  <use xlink:href="#icon-close"></use>
-                </svg>
-              </button>
-            </li>
-
-            <li class="cart__item product">
-              <div class="product__pic">
-                <img
-                  src="img/pic-square-3.jpg"
-                  width="120"
-                  height="120"
-                  srcset="img/pic-square-3@2x.jpg 2x"
-                  alt="Название товара"
-                />
-              </div>
-              <h3 class="product__title">Электрический дрифт-карт Razor Lil’ Crazy</h3>
-              <p class="product__info product__info--color">
-                Цвет:
-                <span>
-                  <i style="background-color: #ff6b00"></i>
-                  Оранжевый
-                </span>
-              </p>
-              <span class="product__code"> Артикул: 1501230 </span>
-
-              <div class="product__counter form__counter">
-                <button type="button" aria-label="Убрать один товар">
-                  <svg width="10" height="10" fill="currentColor">
-                    <use xlink:href="#icon-minus"></use>
-                  </svg>
-                </button>
-
-                <input type="text" value="1" name="count" />
-
-                <button type="button" aria-label="Добавить один товар">
-                  <svg width="10" height="10" fill="currentColor">
-                    <use xlink:href="#icon-plus"></use>
-                  </svg>
-                </button>
-              </div>
-
-              <b class="product__price"> 8 990 ₽ </b>
 
               <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины">
                 <svg width="20" height="20" fill="currentColor">
@@ -163,6 +73,20 @@
 <script>
 export default {
   name: 'CartPage',
+  methods: {
+    addProduct(productId) {
+      this.$store.commit('addProductToCart', {
+        productId: productId,
+        amount: 1,
+      })
+    },
+    removeProduct(productId) {
+      this.$store.commit('removeProductFromCart', {
+        productId: productId,
+        amount: 1,
+      })
+    },
+  },
 }
 </script>
 
