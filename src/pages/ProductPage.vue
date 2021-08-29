@@ -39,8 +39,8 @@
               <ul class="colors">
                 <li class="colors__item" v-for="(color, index) in product.colors" :key="index">
                   <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio" :value="`#${color}`" v-model="selectedColor" />
-                    <span class="colors__value" style="border: 1px solid white" :style="`background-color: #${color}`">
+                    <input class="colors__radio sr-only" type="radio" :value="color" v-model="selectedColor" />
+                    <span class="colors__value" style="border: 1px solid white" :style="`background-color: ${color}`">
                     </span>
                   </label>
                 </li>
@@ -151,8 +151,8 @@ export default {
   name: 'ProductPage',
   data() {
     return {
-      selectedColor: `#${products.find((product) => product.id === +this.$route.params.id).colors[0]}`,
-      selectedSize: `#${products.find((product) => product.id === +this.$route.params.id).sizes[0]}`,
+      selectedColor: `${products.find((product) => product.id === +this.$route.params.id).colors[0] || ''}`,
+      selectedSize: `${products.find((product) => product.id === +this.$route.params.id).sizes[0] || ''}`,
       productAmount: 1,
     }
   },
@@ -166,10 +166,11 @@ export default {
   },
   methods: {
     addToCard() {
-      console.log('addToCard')
       this.$store.commit('addProductToCart', {
         productId: this.product.id,
         amount: this.productAmount,
+        selectedColor: this.selectedColor,
+        selectedSize: this.selectedSize,
       })
     },
   },

@@ -17,8 +17,8 @@
     <ul class="colors colors--black" v-if="product.colors.length">
       <li class="colors__item" v-for="(color, index) in product.colors" :key="index">
         <label class="colors__label">
-          <input class="colors__radio sr-only" type="radio" :value="`#${color}`" v-model="selectedColor" />
-          <span class="colors__value" :style="`background-color: #${color}`"> </span>
+          <input class="colors__radio sr-only" type="radio" v-model="selectedColor" />
+          <span class="colors__value" :style="`background-color: ${color}`"> </span>
         </label>
       </li>
     </ul>
@@ -43,7 +43,7 @@ export default {
   props: ['product'],
   data() {
     return {
-      selectedColor: `#${this.product.colors[0]}`,
+      selectedColor: `${this.product.colors[0]}`,
     }
   },
   methods: {
